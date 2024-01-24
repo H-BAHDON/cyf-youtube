@@ -23,4 +23,4 @@ jobs:
 
     - name: SSH into EC2 and restart server using pm2
       run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@54.161.202.1 "cd ~/server && pm2 reload all"
+        ssh -o StrictHostKeyChecking=no ec2-user@54.161.202.1 "source ~/.bashrc && cd ~/server && pm2 reload all"
