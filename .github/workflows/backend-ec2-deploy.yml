@@ -19,8 +19,8 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Copy backend to EC2
-      run: scp -i ${{ secrets.SSH_PRIVATE_KEY }} -o StrictHostKeyChecking=no -r ./server/* ec2-user@54.161.202.1:~/server
+      run: scp -o StrictHostKeyChecking=no -r ./server/* ec2-user@54.161.202.1:~/server
 
     - name: SSH into EC2 and restart server using pm2
       run: |
-        ssh -i ${{ secrets.SSH_PRIVATE_KEY }} -o StrictHostKeyChecking=no ec2-user@54.161.202.1 "cd server && pm2 reload all"
+        ssh -o StrictHostKeyChecking=no ec2-user@54.161.202.1 "cd ~/server && pm2 reload all"
