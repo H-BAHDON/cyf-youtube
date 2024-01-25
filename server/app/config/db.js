@@ -7,6 +7,9 @@ const pool = new Pool({
   database: 'inital_db',
   password: 'Holloway',
   port: 5432, 
+  ssl:{
+    rejectUnauthorized: false,
+  },
 });
 
 pool.query('SELECT NOW()', (err, res) => {
