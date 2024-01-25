@@ -30,6 +30,18 @@ function Main() {
 
   const handleRemove = (id) => {
     setVideos((prevVideos) => prevVideos.filter((video) => video.id !== id));
+  
+    fetch(`${backEndApi}/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete video from the server");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting video from the server:", error);
+      });
   };
 
   const handleAddVideo = (newVideo) => {
