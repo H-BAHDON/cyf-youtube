@@ -1,9 +1,12 @@
 const fs = require("fs");
 const { Pool } = require('pg');
 
-
 const pool = new Pool({
-  connectionString: "postgres://uctaebxn:oudAX4SA7PGAK9xvC0sormh1aZ4jvUd1@tai.db.elephantsql.com/uctaebxn",
+  user: 'postgres',
+  host: 'cyf-youtube-database.cz82uski4grt.us-east-1.rds.amazonaws.com',
+  database: 'inital_db',
+  password: 'Holloway',
+  port: 5432, 
 });
 
 pool.query('SELECT NOW()', (err, res) => {
@@ -13,6 +16,7 @@ pool.query('SELECT NOW()', (err, res) => {
     console.log('Database connection established:', res.rows[0].now);
   }
 });
+
 module.exports = {
-    query: (text, params) => pool.query(text, params),
-  };
+  query: (text, params) => pool.query(text, params),
+};
