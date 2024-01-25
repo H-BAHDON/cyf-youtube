@@ -7,6 +7,10 @@ const videoRoutes = require("./app/routes/videoRoutes");
 app.use(express.json());
 app.use(cors());
 
-app.use("/", videoRoutes);
+app.get("/", (req, res) => {
+  res.send("Welcome to my video service!");
+});
+
+app.use("/videos", videoRoutes);
 
 app.listen(port, '0.0.0.0', () => console.log(`Listening on port ${port}`));
