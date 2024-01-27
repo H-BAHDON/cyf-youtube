@@ -5,13 +5,13 @@ FROM node:16
 WORKDIR /usr/src/app
 
 # Copy both package.json and package-lock.json to the working directory
-COPY ./package*.json ./
+COPY package*.json ./
 
 # Log the current directory content to check if package.json and package-lock.json are there
 RUN ls -al
 
 # Install application dependencies
-RUN npm install --only=prod
+RUN npm install --only=prod --no-progress --loglevel=error
 
 # Copy the entire backend code to the working directory
 COPY . .
