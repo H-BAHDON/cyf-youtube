@@ -4,14 +4,14 @@ FROM node:16
 # Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the working directory
+# Copy both package.json and package-lock.json to the working directory
 COPY package*.json ./
 
 # Log the current directory content to check if package.json and package-lock.json are there
 RUN ls -al
 
 # Install application dependencies
-RUN npm install
+RUN npm install --only=prod
 
 # Copy the entire backend code to the working directory
 COPY . .
