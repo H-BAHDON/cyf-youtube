@@ -20,11 +20,13 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-2
 
-    - name: Build and Push Docker Image to AWS ECR
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+
+    - name: Build and Push Docker Image to Docker Hub
       run: |
-        docker login -u AWS -p ${{ secrets.AWS_ACCESS_KEY_ID }} ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-        docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cyf-backend:latest .
-        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cyf-backend:latest
+        docker build -t "${{ secrets.DOCKER_HUB_USERNAME }}/cyf-backend:latest" .
+        docker push "${{ secrets.DOCKER_HUB_USERNAME }}/cyf-backend:latest"
 
     - name: Configure SSH
       uses: webfactory/ssh-agent@v0.5.3
