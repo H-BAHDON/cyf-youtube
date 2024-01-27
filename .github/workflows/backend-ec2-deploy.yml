@@ -20,14 +20,11 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-2
 
-    - name: Debug Docker Hub Variables
-      run: |
-        printf "%s" "DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}"
-        printf "%s" "DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}"
-
-
     - name: Log in to Docker Hub
-      run: printf "%s" "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
     - name: Build and Push Docker Image to Docker Hub
       run: |
