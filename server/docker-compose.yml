@@ -2,7 +2,7 @@ version: '3'
 
 services:
   backend:
-    image: "${DOCKER_HUB_USERNAME}/cyf-backend:latest"
+    image: "husseinbahdon/cyf-backend:latest"  
     ports:
       - "5000:5000"
     environment:
