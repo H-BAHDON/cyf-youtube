@@ -20,18 +20,11 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-west-2
 
-    - name: Debug AWS Variables
-      run: |
-        echo "AWS_ACCOUNT_ID: $AWS_ACCOUNT_ID"
-        echo "AWS_REGION: $AWS_REGION"
-        echo "ECR URL: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
-
-
     - name: Build and Push Docker Image to AWS ECR
       run: |
-        echo "$AWS_ACCESS_KEY_ID" | docker login -u AWS --password-stdin "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com"
-        docker build -t "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/cyf-backend:latest" .
-        docker push "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/cyf-backend:latest"
+        docker login -u AWS -p ${{ secrets.AWS_ACCESS_KEY_ID }} ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
+        docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cyf-backend:latest .
+        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cyf-backend:latest
 
     - name: Configure SSH
       uses: webfactory/ssh-agent@v0.5.3
