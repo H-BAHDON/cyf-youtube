@@ -13,13 +13,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Build Docker Image
-      run: docker build -t "${{ secrets.DOCKER_HUB_USERNAME }}/cyf-backend:latest" -f server/Dockerfile .
-
-  authenticate:
-    runs-on: ubuntu-latest
-
-    steps:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
       with:
@@ -33,14 +26,10 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-  push:
-    runs-on: ubuntu-latest
-
-    needs: [build, authenticate]
-
-    steps:
-    - name: Push Docker Image to Docker Hub
-      run: docker push "${{ secrets.DOCKER_HUB_USERNAME }}/cyf-backend:latest"
+    - name: Build and Push Docker Image to Docker Hub
+      run: |
+        docker build -t "${{ secrets.DOCKER_HUB_USERNAME }}/cyf-backend:latest" -f server/Dockerfile .
+        docker push "${{ secrets.DOCKER_HUB_USERNAME }}/cyf-backend:latest"
 
     - name: Configure SSH
       uses: webfactory/ssh-agent@v0.5.3
