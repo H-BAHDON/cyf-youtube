@@ -22,8 +22,8 @@ jobs:
 
     - name: Debug Docker Hub Variables
       run: |
-        echo "DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}"
-        echo "DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}"
+        printf "%s" "DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}"
+        printf "%s" "DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}"
 
 
     - name: Log in to Docker Hub
