@@ -28,7 +28,8 @@ jobs:
 
     - name: Build and Push Docker Image to Docker Hub
       run: |
-        docker build -t "${{ secrets.DOCKER_HUB_USERNAME }}/cyf-backend:latest" -f server/Dockerfile .
+        cd server  
+        docker build -t "${{ secrets.DOCKER_HUB_USERNAME }}/cyf-backend:latest" -f Dockerfile .
         docker push "${{ secrets.DOCKER_HUB_USERNAME }}/cyf-backend:latest"
 
     - name: Configure SSH
