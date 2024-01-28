@@ -9,6 +9,10 @@ services:
       - NODE_ENV=production
     restart: always
 
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+
 networks:
   default:
     external:
