@@ -39,6 +39,8 @@ jobs:
     - name: Copy Docker Compose files to EC2
       run: scp -o StrictHostKeyChecking=no server/docker-compose.yml ec2-user@54.161.202.1:~/docker-compose.yml
 
-    - name: SSH into EC2 and restart Docker Compose
+    - name: SSH into EC2, pull the latest Docker image, and restart Docker Compose
       run: |
-        ssh -o StrictHostKeyChecking=no ec2-user@54.161.202.1 "docker-compose -f server/docker-compose.yml up -d --force-recreate"
+          ssh -o StrictHostKeyChecking=no ec2-user@54.161.202.1 "
+          docker-compose -f server/docker-compose.yml pull &&
+          docker-compose -f server/docker-compose.yml up -d --force-recreate"
