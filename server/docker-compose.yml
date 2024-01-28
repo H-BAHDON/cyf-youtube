@@ -8,10 +8,9 @@ services:
     environment:
       - NODE_ENV=production
     restart: always
-
     build:
-      context: .
-      dockerfile: server/Dockerfile
+      context: ./
+      dockerfile: ./Dockerfile
 
 networks:
   default:
