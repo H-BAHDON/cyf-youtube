@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
-  res.send("Welcome to myy video service!ssss");
+  res.send("Welcome to my video service!ssss");
 });
 
 // app.use("/", videoRoutes);
