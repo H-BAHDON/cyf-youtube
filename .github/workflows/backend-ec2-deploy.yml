@@ -38,10 +38,10 @@ jobs:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Copy Docker Compose files to EC2
-      run: scp -o StrictHostKeyChecking=no server/docker-compose.yml ec2-user@54.161.202.1:~/server/docker-compose.yml
+      run: scp -o StrictHostKeyChecking=no server/docker-compose.yml ec2-user@18.208.152.75:~/server/docker-compose.yml
 
     - name: SSH into EC2, pull the latest Docker image, and restart Docker Compose
       run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@54.161.202.1 "
+          ssh -o StrictHostKeyChecking=no ec2-user@18.208.152.75 "
           docker-compose -f server/docker-compose.yml pull &&
           docker-compose -f server/docker-compose.yml up -d --force-recreate"
