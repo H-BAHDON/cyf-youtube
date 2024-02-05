@@ -1,4 +1,4 @@
 
 
 
-export const backEndApi = "http://54.161.202.1:5000";
+export const backEndApi = "http://18.208.152.75:5000";
