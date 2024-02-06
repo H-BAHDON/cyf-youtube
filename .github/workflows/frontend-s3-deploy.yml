@@ -31,30 +31,24 @@ jobs:
         npm ci
         npm run build
 
-    - name: Debug
-      run: |
-        echo "AWS_REGION: us-west-2"
-        echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
-        echo "AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY"
-        echo "S3_BUCKET: cyfyoutube"
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: build
+        path: client/build
 
   deploy:
     needs: setup
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Download build artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: build
 
     - name: Check AWS credentials
-      run: |
-        aws sts get-caller-identity
-        aws s3api list-buckets
-
-    - name: Check S3 bucket
-      run: |
-        aws s3api get-bucket-location --bucket cyfyoutube
-        aws s3api get-bucket-acl --bucket cyfyoutube
+      run: aws sts get-caller-identity
 
     - name: Sync files to S3
       run: aws s3 sync client/build s3://cyfyoutube
