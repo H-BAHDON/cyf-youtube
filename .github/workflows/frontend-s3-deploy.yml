@@ -20,9 +20,7 @@ jobs:
         changes=$(git diff --name-only $last_commit ${{ github.sha }} | grep "^client/")
         echo "Changes in client folder: $changes"
         echo "::set-output name=changes::$changes"
-    
-    
-    
+
     - name: Configure AWS credentials
       if: steps.check-changes.outputs.changes
       uses: aws-actions/configure-aws-credentials@v2
@@ -45,6 +43,7 @@ jobs:
         npm run build
 
     - name: Debug
+      if: steps.check-changes.outputs.changes
       run: |
         echo "AWS_REGION: us-west-2"
         echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
