@@ -31,6 +31,13 @@ jobs:
         npm ci
         npm run build
 
+    - name: Set environment variables
+      run: |
+        echo "AWS_REGION=us-west-2" >> $GITHUB_ENV
+        echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID" >> $GITHUB_ENV
+        echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY" >> $GITHUB_ENV
+        echo "S3_BUCKET=cyfyoutube" >> $GITHUB_ENV
+
     - name: Debug
       run: |
         echo "AWS_REGION: us-west-2"
@@ -45,4 +52,9 @@ jobs:
 
     steps:
     - name: Sync files to S3
-      run: aws s3 sync client/build s3://cyfyoutube
+      run: aws s3 sync client/build s3://$S3_BUCKET
+      env:
+        AWS_REGION: ${{ needs.setup.outputs.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ needs.setup.outputs.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ needs.setup.outputs.AWS_SECRET_ACCESS_KEY }}
+        S3_BUCKET: ${{ needs.setup.outputs.S3_BUCKET }}
