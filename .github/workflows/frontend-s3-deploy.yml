@@ -54,9 +54,6 @@ jobs:
       with:
         name: build
 
-    - name: Check AWS credentials
-      run: aws sts get-caller-identity
-
     - name: Sync files to S3
       run: aws s3 sync client/build s3://cyfyoutube
       env:
