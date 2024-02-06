@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy:
+  setup:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,6 +37,14 @@ jobs:
         echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
         echo "AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY"
         echo "S3_BUCKET: cyfyoutube"
+
+  deploy:
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
     - name: Sync files to S3
       run: aws s3 sync client/build s3://cyfyoutube
