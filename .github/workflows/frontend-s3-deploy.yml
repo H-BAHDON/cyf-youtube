@@ -16,9 +16,11 @@ jobs:
     - name: Check for changes in client folder
       id: check-changes
       run: |
-        changes=$(git diff --name-only HEAD^ ${{ github.sha }} | grep "^client/")
+        last_commit=$(git rev-parse HEAD^)
+        changes=$(git diff --name-only $last_commit ${{ github.sha }} | grep "^client/")
         echo "Changes in client folder: $changes"
         echo "::set-output name=changes::$changes"
+    
     
     - name: Configure AWS credentials
       if: steps.check-changes.outputs.changes
