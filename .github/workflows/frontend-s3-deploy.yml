@@ -17,10 +17,10 @@ jobs:
       id: check_files
       run: |
         echo "=============== list modified files ==============="
-        git log -n 2 --pretty=format:%H -- client | xargs git diff --name-only
+        git diff --name-only HEAD~1 HEAD -- client
         
         echo "========== check paths of modified files =========="
-        git log -n 2 --pretty=format:%H -- client | xargs git diff --name-only > files.txt
+        git diff --name-only HEAD~1 HEAD -- client > files.txt
         while IFS= read -r file
         do
           echo $file
@@ -32,6 +32,7 @@ jobs:
             echo "::set-output name=run_deploy::true"
           fi
         done < files.txt
+    
     
     
 
